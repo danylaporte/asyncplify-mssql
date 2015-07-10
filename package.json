@@ -1,0 +1,30 @@
+{
+  "name": "asyncplify-mssql",
+  "version": "0.5.0",
+  "description": "asyncplify mssql operators for quering, updating sql databases",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "asyncplify",
+    "FRP",
+    "mssql",
+    "sql"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danylaporte/asyncplify.git"
+  },
+  "author": "Dany Laporte",
+  "license": "MIT",
+  "dependencies": {
+    "asyncplify": "^0.5.0",
+    "debug": "^2.2.0",
+    "mssql": "^2.1.6"
+  },
+  "devDependencies": {
+    "asyncplify-tests": "^1.0.1",
+    "mocha": "^2.2.5"
+  }
+}
