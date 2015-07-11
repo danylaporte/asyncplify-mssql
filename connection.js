@@ -1,3 +1,4 @@
+var bulk = require('./bulk');
 var request = require('./request');
 
 function Connection(conn) {
@@ -6,6 +7,9 @@ function Connection(conn) {
 }
 
 Connection.prototype = {
+	bulk: function (options) {
+		return bulk({connection: this.conn, tableOptions: options});
+	},
 	query: function (sql, params) {
 		return request(this.conn, sql, params);
 	}
