@@ -8,9 +8,14 @@ describe('request', function () {
 		.connect(config)
 		.flatMap(function (connection) {
 			return connection
-				.request('SELECT TOP 1 * FROM sys.tables')
+				.query('SELECT id, name FROM Table1 ORDER BY id')
 				.finally(connection.close);
 		})
 		.pipe(tests.itShouldClose())
-		//.pipe(tests.itShouldACountOf(1));
+		.pipe(tests.itShouldEmitValues([
+			{ id: 1, name: 'Record 1' },
+			{ id: 2, name: 'Record 2' },
+			{ id: 3, name: 'Record 3' },
+			{ id: 4, name: 'Record 4' }
+		]));
 });

@@ -12,7 +12,7 @@ function Connect(config, sink) {
 	
 	var self = this;
 	
-	this.conn.connect(function(err) {
+	this.conn.connect(function connect(err) {
 		if (self.sink) {
 			if (err) {
 				debug('error connecting on %s', config.server);

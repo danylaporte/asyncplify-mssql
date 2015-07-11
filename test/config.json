@@ -1,6 +1,6 @@
 {
 	"server": "localhost",
-	"database": "master",
+	"database": "asyncplify-mssql",
 	"user": "user-here",
 	"password": "password-here"
 }
