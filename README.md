@@ -47,8 +47,36 @@ Example:
 // end.
 ```
 
-### request(sql, params)
-Asynchronously insert records using bulk insert to a table in a database.
+### insert(table)
+Asynchronously insert records into a database table.
+
+options:
+- table: String
+
+Example:
+```js
+	asyncplifyMssql
+		.connect({ 
+			server: 'localhost',
+			database: 'db-here',
+			user: 'user-here',
+			password: 'pw-here'
+		})
+		.flatMap(function (connection) {
+			return asyncplify
+				.range(2)
+				.map(function (x) { return { id: x, name: 'Record #' + x }; })
+				.pipe(connection.insert('myTable'))
+				.finally(connection.close);
+		})
+		.subscribe(console.log.bind(console));
+// { id: 0, name: 'Record #0' }
+// { id: 1, name: 'Record #1' }
+// end.
+```
+
+### query(sql, params)
+Asynchronously execute a request.
 
 options:
 - sql String

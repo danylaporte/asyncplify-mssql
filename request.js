@@ -12,7 +12,10 @@ function Request(options, sink) {
 
 	var self = this;
 
-	if (options.parameters) this.addParameters(options.parameters);
+	if (Array.isArray(options.parameters))
+		this.addParameterArray(options.parameters);
+	else
+		this.addParameters(options.parameters);
 
 	this.request.on('row', function (row) { self.emit(row); });
 	this.request.on('error', function (err) { self.end(err); });
@@ -23,6 +26,16 @@ function Request(options, sink) {
 }
 
 Request.prototype = {
+	addParameterArray: function (array) {
+		for (var i = 0; i < array.length; i++) {
+			var parameter = array[i];
+			
+			if (parameter.type)
+				this.request.input(parameter.name, parameter.type, parameter.value);
+			else
+				this.request.input(parameter.name, parameter.value);
+		}
+	},
 	addParameters: function (parameters) {
 		for (var k in parameters) {
 			var item = parameters[k];
