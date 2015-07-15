@@ -19,11 +19,10 @@ function Connect(config, sink) {
 				debug(err);
 			} else {
 				debug('connected to %s on %s', config.database, config.server);
+				self.sink.emit(new Connection(self.conn));
 			}
 
-			self.sink.emit(new Connection(self.conn));
 			self.conn = null;
-
 			if (self.sink) self.sink.end(err);
 		} else if (self.conn) {
 			self.conn.close();
