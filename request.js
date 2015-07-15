@@ -33,11 +33,6 @@ Request.prototype = {
 				this.request.input(k, item);
 		}
 	},
-	close: function () {
-		this.sink = null;
-		if (this.request) this.request.cancel();
-		this.request = null;
-	},
 	emit: function (row) {
 		if (this.sink) {
 			if (this.count++ === 0) debug('received the first row');
@@ -53,6 +48,13 @@ Request.prototype = {
 
 			this.sink.end(err);
 			this.sink = null;
+		}
+	},
+	setState: function (state) {
+		if (state === Asyncplify.states.CLOSED) {
+			this.sink = null;
+			if (this.request) this.request.cancel();
+			this.request = null;
 		}
 	}
 };

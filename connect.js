@@ -7,11 +7,11 @@ function Connect(config, sink) {
 	this.conn = new SqlConnection(config);
 	this.sink = sink;
 	this.sink.source = this;
-	
+
 	debug('connecting to %s on %s', config.database, config.server);
-	
+
 	var self = this;
-	
+
 	this.conn.connect(function connect(err) {
 		if (self.sink) {
 			if (err) {
@@ -20,10 +20,10 @@ function Connect(config, sink) {
 			} else {
 				debug('connected to %s on %s', config.database, config.server);
 			}
-			
+
 			self.sink.emit(new Connection(self.conn));
 			self.conn = null;
-			
+
 			if (self.sink) self.sink.end(err);
 		} else if (self.conn) {
 			self.conn.close();
@@ -32,10 +32,12 @@ function Connect(config, sink) {
 	});
 }
 
-Connect.prototype.close = function () {
-	this.sink = null;
-	if (this.conn) this.conn.close();
-	this.conn = null;	
+Connect.prototype.setState = function (state) {
+	if (state === Asyncplify.states.CLOSED) {
+		this.sink = null;
+		if (this.conn) this.conn.close();
+		this.conn = null;
+	}
 };
 
 module.exports = function (config) {

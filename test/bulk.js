@@ -21,6 +21,5 @@ describe('bulk', function () {
 				}))
 				.finally(connection.close);
 		})
-		.sum()
-		.pipe(tests.itShouldEmitValues([10001]));
+		.pipe(tests.itShouldEmitValues([5000, 5000, 1]));
 });
