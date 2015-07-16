@@ -1,6 +1,6 @@
 {
   "name": "asyncplify-mssql",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "asyncplify mssql operators for quering, updating sql databases",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "author": "Dany Laporte",
   "license": "MIT",
   "dependencies": {
-    "asyncplify": "^0.5.3",
+    "asyncplify": "^0.5.4",
     "debug": "^2.2.0",
     "mssql": "^2.1.6"
   },
