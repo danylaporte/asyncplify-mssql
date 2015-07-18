@@ -20,7 +20,11 @@ function Request(options, sink) {
 	this.request.on('row', function (row) { self.emit(row); });
 	this.request.on('error', function (err) { self.end(err); });
 	this.request.on('done', function () { self.end(null); });
-	this.request.query(options.sql);
+	
+	if (options.batch)
+		this.request.batch(options.sql);
+	else
+		this.request.query(options.sql);
 
 	debug('querying %s', options.sql);
 }
@@ -72,6 +76,6 @@ Request.prototype = {
 	}
 };
 
-module.exports = function (connection, sql, parameters) {
-	return new Asyncplify(Request, { connection: connection, sql: sql, parameters: parameters });
+module.exports = function (options) {
+	return new Asyncplify(Request, options);
 };

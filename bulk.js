@@ -41,15 +41,15 @@ function createLowercaseProps(types) {
 
 module.exports = function (options) {
     var columns;
+    var tableOptions = options.tableOptions;
 
     return function (items) {
         return items
-            .toArray(5000)
+            .toArray(tableOptions.size || 5000)
             .flatMap({
                 mapper: function (items) {
                     debug('inserting %d item(s)', items.length);
-                    var i;
-                    var tableOptions = options.tableOptions;
+                    var i;                    
                     var table = new SqlTable(tableOptions.table);
 
                     table.create = tableOptions.create;
@@ -71,7 +71,8 @@ module.exports = function (options) {
                         table.rows.push(array);
                     }
 
-                    return new Asyncplify(Bulk, { connection: options.connection, table: table });
+                    return new Asyncplify(Bulk, { connection: options.connection, table: table })
+                        .concat(Asyncplify.fromArray(items));
                 },
                 maxConcurrency: 1
             });
@@ -91,7 +92,6 @@ function Bulk(options, sink) {
             else
                 debug('insert %d item(s)', count);
 
-            if (!err) self.sink.emit(count);
             if (self.sink) self.sink.end(err);
             self.sink = null;
         }

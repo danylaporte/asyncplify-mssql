@@ -22,7 +22,7 @@ module.exports = function (options) {
 				
 				return options
 					.connection
-					.query(sql1 + sql2 + ')', params)
+					.query({ sql: sql1 + sql2 + ')', parameters: params })
 					.defaultIfEmpty(item);	
 			});
 	};

@@ -9,13 +9,21 @@ function Connection(conn) {
 
 Connection.prototype = {
 	bulk: function (options) {
-		return bulk({connection: this.conn, tableOptions: options});
+		return bulk({ connection: this.conn, tableOptions: options });
+	},
+	enableIndexes: function (options) {
+		return require('./indexes').enable(this, options)	
 	},
 	insert: function (table) {
-		return insert({connection: this, table: table});
+		return insert({ connection: this, table: table });
 	},
-	query: function (sql, params) {
-		return request(this.conn, sql, params);
+	query: function (options) {
+		return request({
+			batch: options && options.batch,
+			connection: this.conn,
+			sql: options && options.sql || options,
+			parameters: options && options.parameters
+		});
 	}
 };
 
