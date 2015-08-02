@@ -14,15 +14,17 @@ function Connect(config, sink) {
 
 	this.conn.connect(function connect(err) {
 		if (self.sink) {
+			var conn = self.conn;
+			self.conn = null;
+			
 			if (err) {
 				debug('error connecting on %s', config.server);
 				debug(err);
 			} else {
 				debug('connected to %s on %s', config.database, config.server);
-				self.sink.emit(new Connection(self.conn));
+				self.sink.emit(new Connection(conn));
 			}
 
-			self.conn = null;
 			if (self.sink) self.sink.end(err);
 		} else if (self.conn) {
 			self.conn.close();

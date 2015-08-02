@@ -1,6 +1,6 @@
 {
   "name": "asyncplify-mssql",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "asyncplify mssql operators for quering, updating sql databases",
   "main": "index.js",
   "scripts": {
